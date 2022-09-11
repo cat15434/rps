@@ -1,0 +1,137 @@
+from secrets import choice
+from time import sleep
+import getpass as gp
+import random
+choices = ["rock","paper","scissors"]
+prints = ["Rock!","Paper!","Scissors!","Shoot!"]
+pGOpt = ["y", "n"]
+
+def stop():
+    print("Thanks For Playing")
+def versus():
+    
+    def vsPlay(plr1Choice,plr2Choice):
+        
+        i=0
+        while i<4:
+            print(prints[i])
+            sleep(1)
+            i+=1
+        winner = ""
+        if plr1Choice == "scissors" and plr2Choice == "paper":
+            winner = "Player 1"
+        if plr1Choice == "scissors" and plr2Choice == "rock":
+            winner = "Player 2"
+
+        if plr1Choice == "rock" and plr2Choice == "scissors":
+            winner = "Player 1"
+        if plr1Choice == "rock" and plr2Choice == "paper":
+            winner = "Player 2"
+         
+        if plr1Choice == "paper" and plr2Choice == "rock":
+            winner = "Player 1"
+         
+        if plr1Choice == "paper" and plr2Choice == "scissors":
+            winner = "Player 2"
+        if plr1Choice == plr2Choice:
+            winner = "Tie"
+        
+        print("Player 1 Chose: {}, Player 2 Chose: {}. Winner: {} ".format(plr1Choice.capitalize(),plr2Choice.capitalize(),winner))
+        sleep(1)
+        
+        def PlayAgain():
+            playAgain= input("Would you Like to Play Again? (Y/N): ")
+            if playAgain.lower() in pGOpt:
+                if playAgain.lower() == "y":
+                    
+                    versus()
+                else:
+                    stop()
+            else:
+                print("Choose a Valid Option")
+                PlayAgain()
+        PlayAgain()     
+
+    def plr1Choices():
+        plr1Choice = gp.getpass("Player 1 Enter your weapon (Rock/Paper/Scissors): ").lower()
+        if plr1Choice.lower() in choices:
+            plr2Choices(plr1Choice)
+        else:
+            print("Please Choose a Valid Option")
+            plr1Choices()
+    def plr2Choices(plr1Choice):
+        plr1Choice = plr1Choice
+        plr2Choice = gp.getpass("Player 2 Enter your weapon (Rock/Paper/Scissors): ").lower()
+        if plr2Choice.lower() in choices:
+            vsPlay(plr1Choice,plr2Choice)
+        else:
+            print("Please Choose a Valid Option")
+            plr2Choices()
+    plr1Choices()
+def botPlay():
+
+    def play(plr1Choice):
+        botChoice = choices[random.randint(0,2)]
+        print(botChoice)
+        i=0
+        while i<4:
+            print(prints[i])
+            sleep(1)
+            i+=1
+        if plr1Choice == "scissors" and botChoice == "paper":
+            winner = "Player 1"
+        if plr1Choice == "scissors" and botChoice == "rock":
+            winner = "Bot"
+
+        if plr1Choice == "rock" and botChoice == "scissors":
+            winner = "Player 1"
+        if plr1Choice == "rock" and botChoice == "paper":
+            winner = "Bot"
+         
+        if plr1Choice == "paper" and botChoice == "rock":
+            winner = "Player 1"
+         
+        if plr1Choice == "paper" and botChoice == "scissors":
+            winner = "Bot"
+        if plr1Choice == botChoice:
+            winner = "Tie"
+       
+        print("Player 1 Chose: {}, Bot Chose: {}. Winner: {} ".format(plr1Choice.capitalize(),botChoice.capitalize(),winner))
+        sleep(1)
+        
+        def PlayAgain():
+            playAgain= input("Would you Like to Play Again? (Y/N): ")
+            if playAgain.lower() in pGOpt:
+                if playAgain.lower() == "y":
+                    botPlay()
+                else:
+                    stop()
+            else:
+                print("Choose a Valid Option")
+                PlayAgain()
+        PlayAgain()
+    def plrChoice():
+       
+        plr1Choice = gp.getpass("Player 1 Enter your weapon (Rock/Paper/Scissors): ").lower()
+        if plr1Choice.lower() in choices:
+            play(plr1Choice)
+        else:
+            print("Please Choose a Valid Option")
+            plrChoice()
+    plrChoice()
+def Start():
+    mode = input("How Many Players?(1/2): ")
+
+    if mode.isnumeric():
+
+        if int(mode) > 2:
+            print("Please Enter a Number of players 2 or less")
+            Start()
+        if int(mode) == 1:
+            botPlay()
+        if int(mode) == 2:
+            versus()
+    else:
+        print("Enter a valid number")
+        Start()
+Start()
